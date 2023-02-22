@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualBasic;
 using Proj_01.Data;
+using Proj_01.Models;
 using Proj_01.Models.dto;
+
 
 namespace Proj_01.Controllers
 {
@@ -10,6 +12,20 @@ namespace Proj_01.Controllers
     [ApiController]
     public class UserController
     {
+        //By Route Params
+        [HttpGet("{name}")]
+        public ActionResult<UserDTO> GetUserNameByRouteParams([FromRoute] string name)
+        {
+            var userR = UserStore.users.FirstOrDefault(u => u.name == name);
+            return userR;
+        }
+        //By Query Params
+        [HttpGet("details")]
+        public ActionResult<UserDTO> GetUserNameByQueryParams([FromQuery(Name ="name")] string name)
+        {
+            var userQ = UserStore.users.FirstOrDefault(u => u.name == name);
+            return userQ;
+        }
         [HttpGet]
         public  List<UserDTO> GetUsers()
         {
